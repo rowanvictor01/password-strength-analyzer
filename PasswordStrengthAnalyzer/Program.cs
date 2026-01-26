@@ -1,4 +1,6 @@
-﻿namespace PasswordStrengthAnalyzer;
+﻿using PasswordStrengthAnalyzer.Managers;
+
+namespace PasswordStrengthAnalyzer;
 
 class Program
 {
