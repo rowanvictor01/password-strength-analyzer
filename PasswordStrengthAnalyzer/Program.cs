@@ -6,6 +6,9 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        foreach (char c in InputManager.ReadPassword())
+        {
+            //Console.Write($"{c}");
+        }
     }
 }
