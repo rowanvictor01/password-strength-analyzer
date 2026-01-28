@@ -16,19 +16,29 @@ public static class Analyzer
         {
             _passChecksList.Add(PasswordChecks.TooShort);
         }
-        if(password.Count >= 8)
+        if (password.Count >= 8)
         {
             _passChecksList.Remove(PasswordChecks.TooShort);
         }
         
         // Uppercase Checker
-        if (!CheckIfUpperCaseExists(password) && !_passChecksList.Contains(PasswordChecks.NoUpperCase))
+        if (!CheckIfUpperCaseExists(password) && !_passChecksList.Contains(PasswordChecks.MisingUppercaseLetters))
         {
-            _passChecksList.Add(PasswordChecks.NoUpperCase);
+            _passChecksList.Add(PasswordChecks.MisingUppercaseLetters);
         }
-        if(CheckIfUpperCaseExists(password))
+        if (CheckIfUpperCaseExists(password))
         {
-            _passChecksList.Remove(PasswordChecks.NoUpperCase);
+            _passChecksList.Remove(PasswordChecks.MisingUppercaseLetters);
+        }
+        
+        // Number Checker
+        if (!CheckIfNumberExists(password) && !_passChecksList.Contains(PasswordChecks.MisingNumbers))
+        {
+            _passChecksList.Add(PasswordChecks.MisingNumbers);
+        }
+        if (CheckIfNumberExists(password))
+        {
+            _passChecksList.Remove(PasswordChecks.MisingNumbers);
         }
     }
 
@@ -48,9 +58,15 @@ public static class Analyzer
         }
         
         // Uppercase
-        if (_passChecksList.Contains(PasswordChecks.NoUpperCase))
+        if (_passChecksList.Contains(PasswordChecks.MisingUppercaseLetters))
         {
-            Console.Write("Add an Uppercase Letter, ");
+            Console.Write("Mising an Uppercase Letter, ");
+        }
+        
+        // Numbers
+        if (_passChecksList.Contains(PasswordChecks.MisingNumbers))
+        {
+            Console.Write("Mising a Number, ");
         }
     }
 
@@ -67,9 +83,23 @@ public static class Analyzer
         return false;
     }
 
+    private static bool CheckIfNumberExists(List<char> password)
+    {
+        foreach (char c in password)
+        {
+            if (char.IsDigit(c))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private enum PasswordChecks
     {
         TooShort,
-        NoUpperCase,
+        MisingUppercaseLetters,
+        MisingNumbers,
     }
 }
