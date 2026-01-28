@@ -11,17 +11,17 @@ public static class InputManager
         
         while (keyInfo.Key != ConsoleKey.Enter)
         {
+            // Clear console buffer
             Console.Clear();
             
             // Analyze input in real-time
             Analyzer.CalculateStrength(_charList);
             Analyzer.DisplayStrengthMeter();
             
-            // Read user input per key and store in a list
             Console.SetCursorPosition(0, 5);
             Console.Write("Password: ");
             
-            // Set cursor position should be here
+            // Display asterisk based on previous chars and read new char
             DisplayAsterisks();
             keyInfo = Console.ReadKey(true);
             
