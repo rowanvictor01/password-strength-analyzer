@@ -12,11 +12,11 @@ public static class Analyzer
         */
 
         // Length Checker
-        if (password.Count < 8 && !_passChecksList.Contains(PasswordChecks.TooShort))
+        if (password.Count < 12 && !_passChecksList.Contains(PasswordChecks.TooShort))
         {
             _passChecksList.Add(PasswordChecks.TooShort);
         }
-        if (password.Count >= 8)
+        if (password.Count >= 12)
         {
             _passChecksList.Remove(PasswordChecks.TooShort);
         }
@@ -39,6 +39,17 @@ public static class Analyzer
         if (CheckIfNumberExists(password))
         {
             _passChecksList.Remove(PasswordChecks.MisingNumbers);
+        }
+        
+        // Special Characters
+        if (!CheckIfSpecialCharExists(password) && !_passChecksList.Contains(PasswordChecks.MisingSpecialChars))
+        {
+            _passChecksList.Add(PasswordChecks.MisingSpecialChars);
+        }
+
+        if (CheckIfSpecialCharExists(password))
+        {
+            _passChecksList.Remove(PasswordChecks.MisingSpecialChars);
         }
     }
 
@@ -68,32 +79,27 @@ public static class Analyzer
         {
             Console.Write("Mising a Number, ");
         }
+        
+        // Special Characters
+        if (_passChecksList.Contains(PasswordChecks.MisingSpecialChars))
+        {
+            Console.Write("Mising a Special Character");
+        }
+    }
+
+    private static bool CheckIfSpecialCharExists(List<char> password)
+    {
+        return password.Any(c => char.IsPunctuation(c) || char.IsSymbol(c) || char.IsControl(c));
     }
 
     private static bool CheckIfUpperCaseExists(List<char> password)
     {
-        foreach (char c in password)
-        {
-            if (char.IsUpper(c))
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return password.Any(c => char.IsUpper(c));
     }
 
     private static bool CheckIfNumberExists(List<char> password)
     {
-        foreach (char c in password)
-        {
-            if (char.IsDigit(c))
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return password.Any(c => char.IsDigit(c));
     }
 
     private enum PasswordChecks
@@ -101,5 +107,6 @@ public static class Analyzer
         TooShort,
         MisingUppercaseLetters,
         MisingNumbers,
+        MisingSpecialChars,
     }
 }
