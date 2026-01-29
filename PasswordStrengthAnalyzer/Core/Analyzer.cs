@@ -85,6 +85,12 @@ public static class Analyzer
         {
             Console.Write("Mising a Special Character");
         }
+        
+        // Excellent Password
+        if (_passChecksList.Count == 0)
+        {
+            Console.Write("Excellent");
+        }
     }
 
     private static bool CheckIfSpecialCharExists(List<char> password)
