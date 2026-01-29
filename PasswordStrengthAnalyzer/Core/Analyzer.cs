@@ -61,6 +61,7 @@ public static class Analyzer
         Console.Write("Your password is:");
 
         Console.SetCursorPosition(0, 3);
+        Console.ForegroundColor = ConsoleColor.Red;
         
         // Length
         if (_passChecksList.Contains(PasswordChecks.TooShort))
@@ -89,8 +90,11 @@ public static class Analyzer
         // Excellent Password
         if (_passChecksList.Count == 0)
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("Excellent");
         }
+        
+        Console.ResetColor();
     }
 
     private static bool CheckIfSpecialCharExists(List<char> password)
